@@ -37,10 +37,9 @@ class UserResource extends Resource
                     ->maxLength(255),
                 Forms\Components\TextInput::make('password')
                     ->password()
-                    ->reactive()
-                    ->required(fn ($context): bool => $context === 'create')
+                    ->live(onBlur: true)
+                    ->required(fn ($operation): bool => $operation === 'create')
                     ->dehydrated(fn ($state): bool => filled($state))
-                    ->dehydrateStateUsing(fn ($state): string => Hash::make($state))
                     ->visibleOn(['create', 'edit'])
                     ->minLength(8)
                     ->maxLength(255)
